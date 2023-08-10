@@ -1,0 +1,28 @@
+program FileTest;
+
+{$mode objfpc} // Ne m'oublier jamais
+
+uses
+ Sysutils;
+
+var
+ FileVar: TextFile;
+
+begin
+  WriteLn('Test de fichier');
+  AssignFile(FileVar, 'Test.txt'); // Vous n'avez pas à mettre. Txt, mais c'est juste pour l'instant
+  {$I+} //Utilise les exceptions
+  try  
+    Rewrite(FileVar);  // Créer le fichier
+    Writeln(FileVar,'Salut');
+    CloseFile(FileVar);
+  except
+    on E: EInOutError do
+    begin
+     Writeln('Une erreur de manipulation de fichier s''est produite. Détails: '+E.ClassName+'/'+E.Message);
+    end;    
+  end;
+  WriteLn('Programme terminé. Pressez Entrée pour arrêter.');  
+  ReadLn;
+end.
+
